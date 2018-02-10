@@ -41,7 +41,7 @@ public class CuacaAdapter extends RecyclerView.Adapter<CuacaAdapter.ViewHolder> 
         ViewHolder holderBind = (ViewHolder) holder;
         ListCuacaRepons iteminfo = (ListCuacaRepons) mDataSet.get(position);
         Log.d("CucacaDay",String.valueOf(iteminfo.getDt()));
-        holderBind.textViewHari.setText(SunshineDateUtils.getFriendlyDateString(context,iteminfo.getDt(),true));
+        holderBind.textViewHari.setText(SunshineDateUtils.getFriendlyDateString(context,iteminfo.getDt(),false));
         holderBind.textViewCuaca.setText(iteminfo.getWeather().get(0).getMain());
         holderBind.textViewDerajat.setText(SunshineWeatherUtils.formatTemperature(context,iteminfo.getTemp().getDay()));
         holderBind.textViewDerajat1.setText(SunshineWeatherUtils.formatTemperature(context,iteminfo.getTemp().getMin()));
