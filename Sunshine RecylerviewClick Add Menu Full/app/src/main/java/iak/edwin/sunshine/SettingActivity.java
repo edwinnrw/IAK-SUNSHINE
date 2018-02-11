@@ -1,7 +1,10 @@
 package iak.edwin.sunshine;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
@@ -64,6 +67,23 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                Intent my_intent = new Intent(SettingActivity.this, AlarmReceiver.class);
+
+                PendingIntent pendingIntentMinggu2 = PendingIntent.getBroadcast(SettingActivity.this, 63, my_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                AlarmManager alarm_manager;
+                alarm_manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                Calendar calSet = Calendar.getInstance();
+                calSet.set(Calendar.HOUR_OF_DAY, selectedHour);
+                calSet.set(Calendar.MINUTE, selectedMinute);
+                calSet.set(Calendar.SECOND, 0);
+                calSet.set(Calendar.MILLISECOND, 0);
+                alarm_manager.setRepeating(AlarmManager.RTC_WAKEUP,
+                        calSet.getTimeInMillis(), 24*60*60*1000, pendingIntentMinggu2);
+
+
+
             }
         }, hour, minute, true);//Yes 24 hour time
         mTimePicker.setTitle("Select Time");
@@ -88,6 +108,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     case 1:
                         text_tempt_unit.setText("Imperial (Farenheit)");
                         editor.putString("temp", text_tempt_unit.getText().toString());
+                        editor.commit();
                         break;
 
                 }
