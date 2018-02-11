@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
     private static ServiceGenerator instance=null;
     private ApiService service;
-    String base_url="http://api.openweathermap.org/";
+    String base_url="https://api.themoviedb.org/";
     public ServiceGenerator() {
         Retrofit retrofit = createAdapter().build();
         service = retrofit.create(ApiService.class);    }
@@ -30,5 +30,9 @@ public class ServiceGenerator {
     }
     public Call<CuacaRespons> getForecasr(){
         return service.getForecast();
+    }
+
+    public Call<CuacaRespons>getDetail(String param){
+        return service.getDetail(param);
     }
 }

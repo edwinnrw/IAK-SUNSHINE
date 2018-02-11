@@ -2,6 +2,7 @@ package iak.edwin.sunshine;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -48,7 +49,17 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
+//        ServiceGenerator.getInstance().getDetail("3").enqueue(new Callback<CuacaRespons>() {
+//            @Override
+//            public void onResponse(Call<CuacaRespons> call, Response<CuacaRespons> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CuacaRespons> call, Throwable t) {
+//
+//            }
+//        });
         ServiceGenerator.getInstance().getForecasr().enqueue(new Callback<CuacaRespons>() {
             @Override
             public void onResponse(Call<CuacaRespons> call, Response<CuacaRespons> response) {
@@ -96,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this,SettingActivity.class));
                 break;
             case R.id.menu_share:
+                Uri uri = Uri.parse("smsto:0800000123");
+                Intent it = new Intent(Intent.ACTION_SENDTO, uri);
+                it.putExtra("sms_body", "The SMS text");
+                startActivity(it);
                 break;
         }
         return super.onOptionsItemSelected(item);
